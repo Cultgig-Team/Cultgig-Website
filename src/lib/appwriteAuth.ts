@@ -1,0 +1,3 @@
+import { ID } from 'appwrite'; import { account,isAppwriteConfigured } from './appwrite';
+export async function sendOtp(email:string){if(!isAppwriteConfigured){if(import.meta.env.DEV)return {userId:'local-preview',local:true};throw new Error('Email verification is temporarily unavailable. Please try again later.')}const token=await account.createEmailToken({userId:ID.unique(),email});return {userId:token.userId,local:false};}
+export async function verifyOtp(userId:string,secret:string,local:boolean){if(local){if(!import.meta.env.DEV)throw new Error('Email verification is temporarily unavailable.');if(secret!=='123456')throw new Error('That code is invalid. Please check it and try again.');return;}await account.createSession({userId,secret});}
