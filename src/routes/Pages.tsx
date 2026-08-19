@@ -24,6 +24,7 @@ import {
   StickyStackCard,
   TiltCard,
 } from "../components/motion/MotionPrimitives";
+import { AppMockup } from "../components/ui/AppMockup";
 import { NumberedListItem } from "../components/ui/NumberedListItem";
 import { faqItems } from "../content/faq";
 import { homeContent } from "../content/home";
@@ -35,6 +36,7 @@ import {
   showcaseCreators,
 } from "../content/images";
 import { testimonialItems } from "../content/testimonials";
+import { aboutContent } from "../content/about";
 import { siteConfig } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { motionTokens } from "../styles/motion";
@@ -179,9 +181,25 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
       <Categories />
       <Showcase />
       <Trust />
+      <AppComingSoon />
       <FaqPreview />
       <CTA open={open} />
     </main>
+  );
+}
+function AppComingSoon() {
+  return (
+    <section className="app-coming-soon">
+      <Reveal>
+        <p className="eyebrow purple">{homeContent.app.eyebrow}</p>
+        <h2>{homeContent.app.heading}</h2>
+        <p>{homeContent.app.description}</p>
+        <span className="app-badge">{homeContent.app.badge}</span>
+      </Reveal>
+      <Reveal delay={0.12} x={35}>
+        <AppMockup />
+      </Reveal>
+    </section>
   );
 }
 function Audience({ open }: { open: (r?: Role) => void }) {
@@ -396,6 +414,7 @@ export function InfoPage({
   role,
   image,
   stepGroups,
+  about = false,
 }: {
   title: string;
   eyebrow: string;
@@ -404,6 +423,7 @@ export function InfoPage({
   role?: Role;
   image?: { src: string; alt: string };
   stepGroups?: { title: string; steps: { num: string; title: string; desc: string }[] }[];
+  about?: boolean;
 }) {
   return (
     <Page title={title}>
@@ -431,6 +451,7 @@ export function InfoPage({
         )}
         <CreativeIllustration className="inner-illustration" />
       </section>
+      {about && <AboutStory />}
       {stepGroups && (
         <section className="editorial-workflows">
           {stepGroups.map((group) => (
@@ -445,6 +466,42 @@ export function InfoPage({
       )}
       {role && <CTA open={open} role={role} />}
     </Page>
+  );
+}
+function AboutStory() {
+  return (
+    <>
+      <section className="about-vision">
+        <Reveal>
+          <p className="eyebrow purple">{aboutContent.vision.eyebrow}</p>
+          <h2>{aboutContent.vision.heading}</h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <ScrollRevealText text={aboutContent.vision.paragraphs.join(" ")} />
+        </Reveal>
+      </section>
+      <TeamSection />
+    </>
+  );
+}
+function TeamSection() {
+  return (
+    <section className="team-section">
+      <Reveal>
+        <p className="eyebrow purple">{aboutContent.team.eyebrow}</p>
+        <h2>{aboutContent.team.heading}</h2>
+      </Reveal>
+      {aboutContent.team.members.length ? (
+        <div className="team-grid">
+          {aboutContent.team.members.map((member) => (
+            <article className="team-card" key={member.name}>
+              <img src={member.image} alt={`${member.name}, ${member.designation}`} width="480" height="560" loading="lazy" />
+              <div><h3>{member.name}</h3><p>{member.designation}</p><span>{member.bio}</span><nav aria-label={`${member.name}'s social profiles`}>{member.socials.map((social) => <a key={social.label} href={social.href} target="_blank" rel="noreferrer">{social.label}</a>)}</nav></div>
+            </article>
+          ))}
+        </div>
+      ) : <p className="empty-state">{aboutContent.team.empty}</p>}
+    </section>
   );
 }
 export function FAQPage() {

@@ -48,12 +48,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(25, 10, 24, 0.88),
-    rgba(25, 10, 24, 0.42) 58%,
-    rgba(25, 10, 24, 0.2)
-  );
+  background: linear-gradient(90deg, rgba(18, 7, 18, 0.96) 0%, rgba(25, 10, 24, 0.72) 42%, rgba(25, 10, 24, 0.24) 78%), linear-gradient(0deg, rgba(18, 7, 18, 0.48), transparent 42%);
 }
 .hero-media img {
   width: 100%;
@@ -61,24 +56,27 @@
   object-fit: cover;
 }
 .hero-copy {
+  width: min(760px, 62vw);
   max-width: 760px;
   position: relative;
   z-index: 1;
 }
 .hero-copy h1 {
-  max-width: 740px;
-  font-size: clamp(52px, 8vw, 118px);
+  max-width: 690px;
+  font-size: clamp(48px, 6.8vw, 102px);
   text-transform: uppercase;
-  line-height: 0.98;
+  line-height: 0.94;
+  letter-spacing: -2px;
 }
 .hero-copy h1 .brand-gradient-text {
   display: inline;
   background-image: linear-gradient(180deg, var(--color-secondary) 0%, #fff 100%);
 }
 .hero-copy > p:not(.eyebrow) {
-  font-size: 18px;
-  line-height: 1.65;
-  max-width: 530px;
+  font-size: clamp(16px, 1.45vw, 20px);
+  line-height: 1.5;
+  max-width: 500px;
+  margin: 22px 0 6px;
 }
 .floating-profile-chip {
   position: absolute;
@@ -256,6 +254,202 @@
 }
 .scroll-reveal-text span {
   display: inline;
+}
+.app-coming-soon {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(520px, 1.22fr);
+  gap: 30px;
+  align-items: center;
+  padding: 105px 7%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary-tint), #fff 62%);
+}
+.app-coming-soon h2 {
+  max-width: 520px;
+  font-size: clamp(38px, 5vw, 68px);
+}
+.app-coming-soon > div:first-child > p:not(.eyebrow) {
+  max-width: 470px;
+  color: var(--color-text-secondary);
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.65;
+  margin: 18px 0 24px;
+}
+.app-badge {
+  display: inline-flex;
+  padding: 8px 13px;
+  border: 1px solid var(--color-secondary-dark);
+  border-radius: 999px;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.app-mockup-stage {
+  position: relative;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  min-height: 610px;
+  padding: 44px 0 18px;
+  gap: 18px;
+}
+.app-mockup {
+  position: relative;
+  width: clamp(205px, 19vw, 270px);
+  padding: 9px;
+  border: 1px solid #ffffff;
+  border-radius: 40px;
+  background: #231426;
+  box-shadow: 0 28px 60px rgba(55, 24, 51, 0.22);
+  transform: rotate(-8deg) translateY(22px);
+  z-index: 1;
+}
+.app-mockup:nth-child(2) {
+  transform: rotate(0) translateY(-18px) scale(1.08);
+  z-index: 2;
+}
+.app-mockup:nth-child(3) {
+  transform: rotate(8deg) translateY(30px);
+  z-index: 1;
+}
+.app-mockup-screen {
+  position: relative;
+  min-height: 530px;
+  overflow: hidden;
+  padding: 24px 18px 16px;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #fff, #f8edf7);
+  color: var(--color-text-primary);
+}
+.app-mockup-status,
+.app-mockup-topline,
+.app-mockup-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8px;
+}
+.app-mockup-status b {
+  color: var(--color-primary);
+  font-size: 7px;
+}
+.app-mockup-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 48px;
+  height: 5px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  transform: translateX(-50%);
+}
+.app-mockup-topline {
+  margin-top: 14px;
+  color: var(--color-primary);
+}
+.app-mockup-topline strong {
+  font-size: 14px;
+}
+.app-mockup-topline span {
+  padding: 5px 7px;
+  border-radius: 999px;
+  background: var(--color-primary-tint);
+  font-size: 7px;
+}
+.app-mockup-art {
+  position: relative;
+  height: 170px;
+  margin: 22px -18px 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary-dark));
+}
+.app-mockup-art i,
+.app-mockup-art b,
+.app-mockup-art em {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+}
+.app-mockup-art i {
+  width: 120px;
+  height: 120px;
+  right: -25px;
+  top: -30px;
+  background: var(--color-secondary);
+}
+.app-mockup-art b {
+  width: 76px;
+  height: 76px;
+  left: 30px;
+  bottom: -22px;
+  background: #fff7;
+  border: 1px solid #fff9;
+}
+.app-mockup-art em {
+  width: 34px;
+  height: 34px;
+  left: 78px;
+  top: 42px;
+  background: #fff;
+}
+.app-mockup-label {
+  margin: 0 0 7px;
+  color: var(--color-primary);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.app-mockup-screen h3 {
+  max-width: 215px;
+  font-size: clamp(21px, 2.1vw, 29px);
+  line-height: 1.04;
+}
+.app-mockup-copy {
+  min-height: 62px;
+  margin: 12px 0 16px;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.app-mockup-lines {
+  display: grid;
+  gap: 5px;
+}
+.app-mockup-lines i {
+  display: block;
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-primary-tint);
+}
+.app-mockup-lines i:nth-child(2) { width: 78%; }
+.app-mockup-lines i:nth-child(3) { width: 54%; }
+.app-mockup-button {
+  margin-top: 20px;
+  padding: 11px 8px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+}
+.app-mockup-nav {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-primary);
+  font-size: 13px;
+}
+.app-mockup-nav span:nth-child(3) {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-secondary);
 }
 .audience-grid {
   display: grid;
@@ -736,9 +930,9 @@
     transform: scale(0.72);
   }
   .floating-profile-chip {
-    right: 5%;
-    bottom: 8%;
-    width: min(300px, 72vw);
+    right: 24px;
+    bottom: 24px;
+    width: min(280px, calc(100vw - 48px));
   }
   .hero-orbit-b {
     display: none;
@@ -746,6 +940,20 @@
   .audience,
   .showcase {
     padding: 72px 24px;
+  }
+  .app-coming-soon {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 72px 24px 38px;
+  }
+  .app-mockup-stage {
+    min-height: 480px;
+    transform: scale(0.78);
+    transform-origin: top center;
+    margin-bottom: -58px;
+  }
+  .hero-copy {
+    width: min(100%, 680px);
   }
   .audience-grid,
   .trust-grid {
@@ -800,6 +1008,16 @@
   }
   .hero {
     min-height: 650px;
+    padding: 128px 24px 170px;
+  }
+  .app-mockup-stage {
+    min-height: 410px;
+    transform: scale(0.62);
+    margin-bottom: -125px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(43px, 12vw, 68px);
+    letter-spacing: -1px;
   }
   .inner-hero {
     padding-top: 125px;

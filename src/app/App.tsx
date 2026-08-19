@@ -6,6 +6,7 @@ import { OnboardingProvider } from "../state/onboardingContext";
 import { pageImages } from "../content/images";
 import { siteConfig } from "../config/site";
 import { homeContent } from "../content/home";
+import { aboutContent } from "../content/about";
 import type { Role } from "../types/onboarding";
 import {
   FAQPage,
@@ -74,6 +75,7 @@ export default function App() {
           eyebrow="ABOUT CULTGIG"
           open={open}
           image={pageImages.aboutHero}
+          about
         >
           Cultgig exists because creative work is too often discovered through a
           scattered web of DMs and referrals. We are building a more thoughtful
