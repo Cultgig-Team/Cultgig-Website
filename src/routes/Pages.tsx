@@ -9,6 +9,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { Button } from "../components/ui/Button";
+import { CategoryCard } from "../components/ui/CategoryCard";
 import { HumanImageCard } from "../components/ui/HumanImageCard";
 import {
   CreativeIllustration,
@@ -25,6 +26,7 @@ import {
   categoryImages,
   heroImage,
   pageImages,
+  floatingCreatorThumb,
   showcaseCreators,
 } from "../content/images";
 import { testimonialItems } from "../content/testimonials";
@@ -59,16 +61,30 @@ function CTA({ open, role }: { open: (r?: Role) => void; role?: Role }) {
     <section className="cta-band">
       <Reveal>
         <div>
-          <p className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
-          <h2>
-            Ready to get <i>discovered?</i>
-          </h2>
+          <p className="eyebrow">{homeContent.ctaBand.eyebrow}</p>
+          <h2>{homeContent.ctaBand.heading}</h2>
         </div>
       </Reveal>
       <Button variant="light" className="magnetic" onClick={() => open(role)}>
-        Get Started <ChevronRight size={17} />
+        {homeContent.ctaBand.button} <ChevronRight size={17} />
       </Button>
     </section>
+  );
+}
+function FloatingProfileChip() {
+  return (
+    <motion.figure
+      className="floating-profile-chip"
+      initial={{ opacity: 0, y: 18, rotate: 3 }}
+      animate={{ opacity: 1, y: 0, rotate: -4 }}
+      transition={{ delay: motionTokens.standard, duration: motionTokens.reveal, ease: motionTokens.easeOut }}
+    >
+      <img src={floatingCreatorThumb.src} alt={floatingCreatorThumb.alt} width="72" height="72" />
+      <figcaption>
+        <small>{homeContent.hero.floatingChip.label}</small>
+        <strong>{homeContent.hero.floatingChip.description}</strong>
+      </figcaption>
+    </motion.figure>
   );
 }
 export function HomePage({ open }: { open: (r?: Role) => void }) {
@@ -80,6 +96,7 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
           <ParallaxImage src={heroImage.src} alt={heroImage.alt} />
         </div>
         <FloatingVisual />
+        <FloatingProfileChip />
         <motion.div
           className="hero-copy"
           initial="hidden"
@@ -170,6 +187,9 @@ function Audience({ open }: { open: (r?: Role) => void }) {
               <p>{homeContent.audienceSplit.artist.badge}</p>
               <h3>{homeContent.audienceSplit.artist.title}</h3>
               <span>{homeContent.audienceSplit.artist.description}</span>
+              <ul className="audience-highlights">
+                {homeContent.audienceSplit.artist.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+              </ul>
               <Button variant="outline" onClick={() => open("artist")}>
                 {homeContent.audienceSplit.artist.cta}{" "}
                 <ArrowUpRight size={16} />
@@ -184,6 +204,9 @@ function Audience({ open }: { open: (r?: Role) => void }) {
               <p>{homeContent.audienceSplit.client.badge}</p>
               <h3>{homeContent.audienceSplit.client.title}</h3>
               <span>{homeContent.audienceSplit.client.description}</span>
+              <ul className="audience-highlights">
+                {homeContent.audienceSplit.client.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+              </ul>
               <Button variant="outline" onClick={() => open("client")}>
                 {homeContent.audienceSplit.client.cta}{" "}
                 <ArrowUpRight size={16} />
@@ -209,6 +232,7 @@ function Split() {
           ))}
         </div>
       </Reveal>
+      <CreativeIllustration className="problem-illustration" />
     </section>
   );
 }
@@ -218,6 +242,7 @@ function How() {
       <Reveal>
         <p className="eyebrow purple">{homeContent.howItWorks.eyebrow}</p>
         <h2>{homeContent.howItWorks.heading}</h2>
+        <p className="section-intro">{homeContent.howItWorks.subheading}</p>
       </Reveal>
       <StaggerReveal className="tracks">
         <StaggerItem>
@@ -275,24 +300,12 @@ function Categories() {
       <Reveal>
         <p className="eyebrow">{homeContent.categories.eyebrow}</p>
         <h2>{homeContent.categories.heading}</h2>
+        <p className="section-intro">{homeContent.categories.subheading}</p>
       </Reveal>
       <StaggerReveal className="category-grid">
         {Object.values(categoryImages).map((category, i) => (
           <StaggerItem key={category.category}>
-            <TiltCard>
-              <article
-                className="category-card"
-                style={{
-                  backgroundImage: `linear-gradient(0deg,rgba(20,5,17,.8),transparent),url(${category.src})`,
-                }}
-                role="img"
-                aria-label={category.category}
-              >
-                <small>0{i + 1}</small>
-                <span>{category.category}</span>
-                <ArrowUpRight />
-              </article>
-            </TiltCard>
+            <CategoryCard number={`0${i + 1}`} label={category.category!} image={category.src} alt={category.alt} />
           </StaggerItem>
         ))}
       </StaggerReveal>
@@ -305,9 +318,10 @@ function Showcase() {
       <Reveal>
         <p className="eyebrow purple">{homeContent.showcase.eyebrow}</p>
         <h2>{homeContent.showcase.heading}</h2>
+        <p className="section-intro">{homeContent.showcase.subheading}</p>
       </Reveal>
       <StaggerReveal className="showcase-grid">
-        {showcaseCreators.slice(0, 3).map((creator, index) => (
+        {showcaseCreators.map((creator, index) => (
           <StaggerItem key={creator.name}>
             <TiltCard>
               <HumanImageCard
@@ -318,6 +332,7 @@ function Showcase() {
                 role={creator.role}
                 location={creator.city}
                 eager={index === 0}
+                variant={index === 0 ? "offset" : index === 1 ? "overlap" : "rect"}
               />
             </TiltCard>
           </StaggerItem>
@@ -331,8 +346,8 @@ function Trust() {
   return (
     <section className="trust">
       <Reveal>
-        <p className="eyebrow purple">BUILT ON GOOD WORK</p>
-        <h2>Creative work is personal.</h2>
+        <p className="eyebrow purple">{homeContent.trust.eyebrow}</p>
+        <h2>{homeContent.trust.heading}</h2>
       </Reveal>
       <StaggerReveal className="trust-grid">
         {homeContent.trust.pillars.map((pillar, index) => (

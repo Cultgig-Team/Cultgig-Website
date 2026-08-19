@@ -64,6 +64,8 @@ The exact Cultgig plum/blush token palette, Poppins headings, Inter UI/body text
 
 ## Known limitations and roadmap
 
-Photography is currently hot-linked from Unsplash rather than locally optimized. Replace the support/legal/social placeholders in `src/config/site.ts` before launch. The live site’s deployed metadata may come from a separate pipeline; verify deployment ownership before release.
+Photography is now stored in `public/images` and referenced through `src/content/images.ts`; replace these curated placeholders with approved production photography before launch. Replace the support/legal/social placeholders in `src/config/site.ts` before launch. The live site’s deployed metadata may come from a separate pipeline; verify deployment ownership before release. Client-side metadata now includes canonical and OG image tags, but static hosting still serves the Vite shell before JavaScript executes, so a prerendering step remains a deployment consideration for crawler/social-scraper coverage.
+
+The motion system uses named `micro`, `fast`, `standard`, `reveal`, and `emphasis` durations plus the shared spring token in `src/styles/motion.ts`. `HumanImageCard` supports `rect`, `circular`, `offset`, and `overlap` compositions for representative creator imagery.
 
 Future work, explicitly not included here: browse/search, public profiles, real login/session management, bookings, messaging, and gig posting.

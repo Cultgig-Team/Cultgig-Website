@@ -19,6 +19,14 @@ export function usePageMeta(title: string, description = defaultDescription) {
     set("og:title", `${title} | Cultgig`, true);
     set("og:description", description, true);
     set("og:type", "website", true);
+    set("og:image", `${window.location.origin}/images/hero-performance.jpg`, true);
     set("twitter:card", "summary_large_image");
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.append(canonical);
+    }
+    canonical.href = `${window.location.origin}${window.location.pathname}`;
   }, [title, description]);
 }

@@ -16,6 +16,10 @@
   --color-border-active: #6b2c63;
   --color-success: #22a06b;
   --color-error: #e24c4c;
+  --shadow-soft: 0 14px 34px rgba(58, 33, 56, 0.08);
+  --shadow-raised: 0 22px 45px rgba(58, 33, 56, 0.14);
+  --shadow-floating: 0 32px 80px rgba(32, 10, 30, 0.18);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 * {
   box-sizing: border-box;
@@ -83,6 +87,7 @@ textarea:focus-visible {
   gap: 8px;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--shadow-inset);
 }
 .button-primary {
   background: var(--color-primary);
@@ -141,6 +146,7 @@ textarea:focus-visible {
   align-items: center;
   padding: 120px 7%;
   color: #fff;
+  isolation: isolate;
 }
 .hero > div {
   max-width: 740px;

@@ -24,7 +24,7 @@ export function Reveal({
       whileInView={reduced ? {} : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.18 }}
       transition={{
-        duration: motionTokens.standard,
+        duration: motionTokens.reveal,
         ease: motionTokens.easeOut,
         delay,
       }}
@@ -73,7 +73,7 @@ export function StaggerItem({
           opacity: 1,
           y: 0,
           transition: {
-            duration: motionTokens.standard,
+            duration: motionTokens.reveal,
             ease: motionTokens.easeOut,
           },
         },
@@ -134,7 +134,7 @@ export function FloatingVisual() {
     <motion.div
       className="floating-visual"
       animate={reduced ? {} : { y: [0, -9, 0], rotate: [-4, 2, -4] }}
-      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: motionTokens.emphasis * 8, repeat: Infinity, ease: "easeInOut" }}
       aria-hidden="true"
     >
       <span>✦</span>

@@ -1,4 +1,3 @@
-import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 export type HumanImageCardProps = {
@@ -11,6 +10,7 @@ export type HumanImageCardProps = {
   badge?: string;
   className?: string;
   eager?: boolean;
+  variant?: "rect" | "circular" | "offset" | "overlap";
 };
 
 export function HumanImageCard({
@@ -23,12 +23,13 @@ export function HumanImageCard({
   badge,
   className = "",
   eager = false,
+  variant = "rect",
 }: HumanImageCardProps) {
   const reduced = useReducedMotion();
 
   return (
     <motion.figure
-      className={`human-card ${className}`}
+      className={`human-card human-card-${variant} ${className}`}
       whileFocus={reduced ? undefined : { y: -6 }}
       whileHover={reduced ? undefined : { scale: 1.02, y: -6 }}
       transition={{ type: "spring", stiffness: 220, damping: 18 }}
