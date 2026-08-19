@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import heroPerformance from "../assets/images/hero-performance.jpg";
 const defaultDescription =
   "Cultgig helps independent artists create a profile and get discovered by the people who need their work.";
 export function usePageMeta(title: string, description = defaultDescription) {
@@ -19,7 +20,7 @@ export function usePageMeta(title: string, description = defaultDescription) {
     set("og:title", `${title} | Cultgig`, true);
     set("og:description", description, true);
     set("og:type", "website", true);
-    set("og:image", `${window.location.origin}/images/hero-performance.jpg`, true);
+    set("og:image", `${window.location.origin}${heroPerformance}`, true);
     set("twitter:card", "summary_large_image");
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
