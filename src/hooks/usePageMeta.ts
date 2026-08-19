@@ -1,7 +1,8 @@
 import { useEffect } from "react";
+import { pageDescriptions, siteConfig } from "../config/site";
 const defaultDescription =
   "Cultgig helps independent artists create a profile and get discovered by the people who need their work.";
-export function usePageMeta(title: string, description = defaultDescription) {
+export function usePageMeta(title: string, description = pageDescriptions[title] ?? defaultDescription) {
   useEffect(() => {
     document.title = `${title} | Cultgig`;
     const set = (key: string, content: string, property = false) => {
@@ -24,6 +25,21 @@ export function usePageMeta(title: string, description = defaultDescription) {
     set("twitter:title", `${title} | Cultgig`);
     set("twitter:description", description);
     set("twitter:image", `${window.location.origin}/og-image.jpg`);
+    set("og:url", window.location.href, true);
+    let structuredData = document.head.querySelector<HTMLScriptElement>('script[data-cultgig-schema="true"]');
+    if (!structuredData) {
+      structuredData = document.createElement("script");
+      structuredData.type = "application/ld+json";
+      structuredData.dataset.cultgigSchema = "true";
+      document.head.append(structuredData);
+    }
+    structuredData.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: window.location.origin,
+      description,
+    });
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");

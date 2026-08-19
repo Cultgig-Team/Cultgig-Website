@@ -26,6 +26,7 @@
 }
 html {
   scroll-behavior: smooth;
+  min-width: 320px;
 }
 body {
   margin: 0;
@@ -162,7 +163,7 @@ textarea:focus-visible {
   color: #fff;
   isolation: isolate;
 }
-.hero > div {
+.hero-copy {
   max-width: 740px;
 }
 .eyebrow {
@@ -241,7 +242,7 @@ h2 i {
   color: var(--color-primary);
   font: 600 19px Satoshi, sans-serif;
 }
-.track p {
+.track > p {
   border-top: 1px solid var(--color-border);
   padding: 16px 0;
   margin: 16px 0 0;
@@ -255,7 +256,7 @@ h2 i {
   background: #191116;
   color: #fff;
 }
-.categories > div {
+.category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
@@ -274,7 +275,7 @@ h2 i {
 .trust {
   text-align: center;
 }
-.trust > div {
+.trust-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
@@ -300,7 +301,7 @@ details,
 }
 summary,
 .faq-list button {
-  font: 600 16px Poppins;
+  font: 600 16px Satoshi, sans-serif;
   cursor: pointer;
   background: none;
   border: 0;
@@ -379,6 +380,10 @@ details p {
 }
 .editorial-workflow .numbered-list-item:first-of-type {
   border-top: 0;
+}
+.categories .section-intro,
+.categories .eyebrow {
+  color: var(--color-secondary);
 }
 .prose {
   margin-bottom: 28px;
@@ -592,6 +597,13 @@ details p {
     gap: 24px;
     padding: 0 24px 68px;
   }
+  .inner-hero-image {
+    position: static;
+    display: block;
+    width: 100%;
+    height: min(52vw, 300px);
+    margin-top: 30px;
+  }
   .split,
   .surface,
   .categories,
@@ -601,13 +613,13 @@ details p {
   .cta-band {
     padding: 68px 24px;
   }
-  .categories > div {
+  .category-grid {
     grid-template-columns: 1fr 1fr;
   }
   .categories article {
     min-height: 175px;
   }
-  .trust > div {
+  .trust-grid {
     grid-template-columns: 1fr;
   }
   .cta-band {
@@ -628,7 +640,7 @@ details p {
   .site-footer {
     grid-template-columns: 1fr;
   }
-  .categories > div {
+  .category-grid {
     grid-template-columns: 1fr;
   }
   .modal-content {
