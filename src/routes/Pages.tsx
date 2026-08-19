@@ -181,20 +181,20 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
       <Categories />
       <Showcase />
       <Trust />
-      <AppComingSoon />
+      <AppComingSoon open={open} />
       <FaqPreview />
       <CTA open={open} />
     </main>
   );
 }
-function AppComingSoon() {
+function AppComingSoon({ open }: { open: (role?: Role) => void }) {
   return (
     <section className="app-coming-soon">
       <Reveal>
         <p className="eyebrow purple">{homeContent.app.eyebrow}</p>
         <h2>{homeContent.app.heading}</h2>
         <p>{homeContent.app.description}</p>
-        <span className="app-badge">{homeContent.app.badge}</span>
+        <Button variant="glow" onClick={() => open("artist")}>{homeContent.app.badge} <ChevronRight size={17} /></Button>
       </Reveal>
       <Reveal delay={0.12} x={35}>
         <AppMockup />
@@ -338,10 +338,10 @@ function Showcase() {
         <h2>{homeContent.showcase.heading}</h2>
         <p className="section-intro">{homeContent.showcase.subheading}</p>
       </Reveal>
-      <div className="sticky-stack">
+      <StaggerReveal className="showcase-grid">
         {showcaseCreators.map((creator, index) => (
-          <StickyStackCard key={creator.name} index={index} total={showcaseCreators.length}>
-            <Reveal delay={index * 0.08}>
+          <StaggerItem key={creator.name}>
+            <TiltCard>
               <HumanImageCard
                 src={creator.image}
                 alt={`Representative creative showcase: ${creator.name}`}
@@ -350,12 +350,12 @@ function Showcase() {
                 role={creator.role}
                 location={creator.city}
                 eager={index === 0}
-                variant={index === 0 ? "offset" : index === 1 ? "overlap" : "rect"}
+                variant="rect"
               />
-            </Reveal>
-          </StickyStackCard>
+            </TiltCard>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerReveal>
       <p className="representative">{homeContent.showcase.disclaimer}</p>
     </section>
   );
