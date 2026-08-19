@@ -8,7 +8,9 @@
 - **Production source maps**: Disabled (Vite default); source maps are never shipped in production builds
 - **Environment variables**: All secrets loaded via `.env`; Appwrite client SDK uses public project ID and endpoint (intentional for browser clients)
 - **Dev bypass removal**: The application OTP bypass branch is correctly gated by `import.meta.env.DEV`; application-specific bypass strings are absent from the production bundle. A generic `123456` numeric alphabet appears in bundled dependency data and is unrelated to OTP handling.
-- **Security headers**: Configure CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS, and frame protection at the hosting/CDN layer. These headers are intentionally not encoded in the Vite client bundle.
+- **Security headers**: Configure CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS, and frame protection at the hosting/CDN layer. These headers are intentionally not encoded in the Vite client bundle. If using the current hosted Satoshi stylesheet, CSP must allow `https://api.fontshare.com` and its font asset host; a licensed local Satoshi variable file can remove that external dependency.
+- **Public URL handling**: Deployment-provided social links accept only valid HTTPS URLs; contact email values are validated before rendering.
+- **Upload handling**: Client uploads are limited to supported image/video MIME types and 10 MB per file before Appwrite storage is called. Server-side Appwrite bucket limits and MIME validation must still be configured.
 
 ## ⚠️ Pre-Launch Action Required
 
@@ -30,6 +32,12 @@ admin/team: read, update, delete
 ```
 
 If this cannot be confirmed before launch, **do not deploy to production**.
+
+Also verify the media bucket separately:
+
+- Guests may create files only through the intended onboarding flow.
+- File read/view access must match the product decision for profile media; do not make private submissions broadly readable.
+- Configure file size, MIME-type, and rate limits in Appwrite as a server-side control. Client validation is only a first line of defense.
 
 ## Image Asset Migration
 

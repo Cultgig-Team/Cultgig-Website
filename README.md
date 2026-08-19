@@ -64,7 +64,7 @@ The exact Cultgig plum/blush token palette, Poppins headings, Inter UI/body text
 
 ## Known limitations and roadmap
 
-Photography is stored in `src/assets/images` and imported through `src/content/images.ts`, so Vite emits cache-busted asset names. The stable `public/og-image.jpg` is reserved for static social previews. Deployment-specific support, legal, and social values are configured through the variables documented in `.env.example`. Client-side metadata includes canonical, Open Graph, and Twitter/X tags; static hosting still serves the Vite shell before JavaScript executes, so prerendering remains a deployment consideration for full per-route crawler coverage.
+Photography is stored in `src/assets/images` and imported through `src/content/images.ts`, so Vite emits cache-busted asset names. The minimal `public/` directory is intentional: Vite copies it as-is for root-served `robots.txt`, `sitemap.xml`, and the stable `og-image.jpg`; it is not a duplicate source tree or second application. Deployment-specific support, legal, and social values are configured through the variables documented in `.env.example`. Client-side metadata includes canonical, Open Graph, and Twitter/X tags; static hosting still serves the Vite shell before JavaScript executes, so prerendering remains a deployment consideration for full per-route crawler coverage.
 
 The motion system uses named `micro`, `fast`, `standard`, `reveal`, and `emphasis` durations plus the shared spring token in `src/styles/motion.ts`. `HumanImageCard` supports `rect`, `circular`, `offset`, and `overlap` compositions for representative creator imagery.
 

@@ -117,7 +117,7 @@
 }
 .floating-profile-chip strong {
   color: var(--color-bg);
-  font: 600 12px/1.4 Poppins;
+  font: 600 12px/1.4 Satoshi, sans-serif;
 }
 .magnetic {
   box-shadow: 0 10px 24px #3c133827;
@@ -219,7 +219,7 @@
 }
 .numbered-list-item strong {
   color: var(--color-primary);
-  font: 700 clamp(42px, 7vw, 92px)/0.9 Poppins, sans-serif;
+  font: 700 clamp(42px, 7vw, 92px)/0.9 Satoshi, sans-serif;
   letter-spacing: -4px;
 }
 .numbered-list-item h3 {
@@ -330,7 +330,7 @@
   display: grid;
 }
 .human-card-name {
-  font: 600 15px Poppins;
+  font: 600 15px Satoshi, sans-serif;
 }
 .human-card-circular {
   overflow: visible;
@@ -539,7 +539,7 @@
   font-weight: bold;
 }
 .category-card span {
-  font: 600 17px Poppins;
+  font: 600 17px Satoshi, sans-serif;
   align-self: end;
 }
 .category-card svg {
@@ -592,7 +592,7 @@
   gap: 2px;
 }
 .creator-card b {
-  font: 600 15px Poppins;
+  font: 600 15px Satoshi, sans-serif;
 }
 .creator-card span,
 .creator-card small {
@@ -651,7 +651,7 @@
   position: absolute;
   right: 8%;
   top: 30px;
-  font: 70px Poppins;
+  font: 70px Satoshi, sans-serif;
   color: var(--color-secondary);
   opacity: 0.7;
 }

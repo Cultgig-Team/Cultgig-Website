@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:ital,wght@0,600;0,700;1,600&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,7 +30,7 @@ html {
 body {
   margin: 0;
   color: var(--color-text-primary);
-  font-family: Inter, sans-serif;
+  font-family: Satoshi, sans-serif;
   background: var(--color-bg);
   overflow-x: clip;
 }
@@ -52,7 +52,7 @@ textarea:focus-visible {
 }
 .logo,
 .brand {
-  font: 700 25px Poppins;
+  font: 700 25px Satoshi, sans-serif;
   color: var(--color-primary);
   letter-spacing: -1.5px;
 }
@@ -177,7 +177,7 @@ textarea:focus-visible {
 h1,
 h2,
 h3 {
-  font-family: Poppins, sans-serif;
+  font-family: Satoshi, sans-serif;
   letter-spacing: -1.5px;
   margin: 0;
 }
@@ -239,7 +239,7 @@ h2 i {
 }
 .track > b {
   color: var(--color-primary);
-  font: 600 19px Poppins;
+  font: 600 19px Satoshi, sans-serif;
 }
 .track p {
   border-top: 1px solid var(--color-border);
@@ -269,7 +269,7 @@ h2 i {
   background-size: cover;
   background-position: center;
   border-radius: 17px;
-  font: 600 16px Poppins;
+  font: 600 16px Satoshi, sans-serif;
 }
 .trust {
   text-align: center;
@@ -344,7 +344,7 @@ details p {
   margin: 0;
 }
 .site-footer b {
-  font-family: Poppins;
+  font-family: Satoshi, sans-serif;
 }
 .site-footer small {
   grid-column: 1/-1;
