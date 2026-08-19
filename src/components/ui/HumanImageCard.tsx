@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export type HumanImageCardProps = {
   src: string;
@@ -21,7 +21,7 @@ export function HumanImageCard({
   role,
   location,
   badge,
-  className = '',
+  className = "",
   eager = false,
 }: HumanImageCardProps) {
   const reduced = useReducedMotion();
@@ -29,11 +29,12 @@ export function HumanImageCard({
   return (
     <motion.figure
       className={`human-card ${className}`}
+      whileFocus={reduced ? undefined : { y: -6 }}
       whileHover={reduced ? undefined : { scale: 1.02, y: -6 }}
-      transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
     >
       <div className="human-card-media">
-        <img src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} />
+        <img src={src} alt={alt} loading={eager ? "eager" : "lazy"} />
         {badge && <span className="human-card-badge">{badge}</span>}
       </div>
       <figcaption className="human-card-meta">

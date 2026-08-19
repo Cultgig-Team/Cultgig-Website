@@ -1,9 +1,506 @@
-import { ChevronRight,MapPin,Music2,BriefcaseBusiness,ShieldCheck,Sparkles,ArrowUpRight } from 'lucide-react'; import { AnimatePresence,motion,useReducedMotion } from 'framer-motion'; import { useState } from 'react'; import { Button } from '../components/ui/Button'; import { CreativeIllustration,FloatingVisual,ParallaxImage,Reveal,StaggerItem,StaggerReveal,TiltCard } from '../components/motion/MotionPrimitives'; import { faqItems } from '../content/faq'; import { usePageMeta } from '../hooks/usePageMeta'; import { motionTokens } from '../styles/motion'; import type { Role } from '../types/onboarding';
-const photos=['https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=80','https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80'];
-function Page({title,children}:{title:string;children:React.ReactNode}){usePageMeta(title);const reduced=useReducedMotion();return <motion.main className="page" initial={reduced?false:{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:motionTokens.standard,ease:motionTokens.easeOut}}>{children}</motion.main>};function CTA({open,role}:{open:(r?:Role)=>void;role?:Role}){return <section className="cta-band"><Reveal><div><p className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p><h2>Ready to get <i>discovered?</i></h2></div></Reveal><Button variant="light" className="magnetic" onClick={()=>open(role)}>Get Started <ChevronRight size={17}/></Button></section>}
-export function HomePage({open}:{open:(r?:Role)=>void}){usePageMeta('Where Artists & Gigs Get Discovered');return <main><section className="hero"><div className="hero-media"><ParallaxImage src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1800&q=85" alt="Musician performing under warm stage lights"/></div><FloatingVisual/><motion.div className="hero-copy" initial="hidden" animate="show" variants={{hidden:{},show:{transition:{staggerChildren:.12}}}}><motion.p className="eyebrow" variants={{hidden:{opacity:0,y:15},show:{opacity:1,y:0}}}>INDIA'S CREATIVE MARKETPLACE</motion.p><motion.h1 variants={{hidden:{opacity:0,y:32},show:{opacity:1,y:0,transition:{duration:motionTokens.slow,ease:motionTokens.easeOut}}}}>Where Artists & <i>Gigs</i> Get Discovered.</motion.h1><motion.p variants={{hidden:{opacity:0,y:20},show:{opacity:1,y:0}}}>Create your profile, find your people, and turn your talent into work you love.</motion.p><motion.div variants={{hidden:{opacity:0,y:16},show:{opacity:1,y:0}}}><Button className="magnetic" onClick={()=>open('artist')}>I’m an Artist <Music2 size={17}/></Button><Button className="magnetic" variant="light" onClick={()=>open('client')}>I’m Hiring <BriefcaseBusiness size={17}/></Button></motion.div></motion.div><div className="hero-orbit hero-orbit-a"/><div className="hero-orbit hero-orbit-b"/></section><Audience open={open}/><Split/><How/><Categories/><Showcase/><Trust/><FaqPreview/><CTA open={open}/></main>}
-function Audience({open}:{open:(r?:Role)=>void}){return <section className="audience"><Reveal><p className="eyebrow purple">ONE PLACE. TWO POWERFUL STARTS.</p><h2>Made for the people<br/>who make things happen.</h2></Reveal><StaggerReveal className="audience-grid"><StaggerItem><TiltCard><article className="audience-card artist-card"><Music2/><p>FOR ARTISTS</p><h3>Present your work like it deserves.</h3><span>Build a profile that makes your craft easier to discover.</span><Button variant="outline" onClick={()=>open('artist')}>Create profile <ArrowUpRight size={16}/></Button></article></TiltCard></StaggerItem><StaggerItem><TiltCard><article className="audience-card business-card"><BriefcaseBusiness/><p>FOR BUSINESSES</p><h3>Start with the right creative fit.</h3><span>Tell us what you need and help shape the marketplace.</span><Button variant="outline" onClick={()=>open('client')}>Start hiring <ArrowUpRight size={16}/></Button></article></TiltCard></StaggerItem></StaggerReveal></section>}
-function Split(){return <section className="split"><Reveal><p className="eyebrow purple">THE OLD WAY IS EXHAUSTING</p><h2>Talent deserves more than a lucky DM.</h2></Reveal><Reveal delay={.08}><div><p>Independent artists shouldn’t have to rely on scattered referrals to find their next opportunity. Businesses shouldn’t have to chase contacts just to fill a room.</p><p>Cultgig puts local talent and meaningful opportunities in the same place — with profiles that let the work do the talking.</p></div></Reveal></section>};function How(){return <section className="surface how-section"><Reveal><p className="eyebrow purple">HOW IT WORKS</p><h2>Make the right connection.</h2></Reveal><StaggerReveal className="tracks"><StaggerItem><Track title="For artists" icon={<Music2/>} items={['Create your profile','Get discovered','Build your reputation']}/></StaggerItem><StaggerItem><Track title="For businesses" icon={<BriefcaseBusiness/>} items={['Find talent','Compare the fit','Request a booking']}/></StaggerItem></StaggerReveal></section>};function Track({title,icon,items}:{title:string;icon:React.ReactNode;items:string[]}){return <TiltCard><article className="track"><b>{icon}{title}</b>{items.map((x,i)=><p key={x}><span>0{i+1}</span>{x}<ArrowUpRight size={14}/></p>)}</article></TiltCard>};function Categories(){return <section id="categories" className="categories"><Reveal><p className="eyebrow">EVERY KIND OF CREATIVE</p><h2>Your next gig could be <i>anywhere.</i></h2></Reveal><StaggerReveal className="category-grid">{['Musicians & DJs','Photographers & Videographers','Decorators & Event Managers','Makeup, Beauty & Dance'].map((x,i)=><StaggerItem key={x}><TiltCard><article className="category-card" style={{backgroundImage:`linear-gradient(0deg,rgba(20,5,17,.8),transparent),url(${photos[i]})`}} role="img" aria-label={x}><small>0{i+1}</small><span>{x}</span><ArrowUpRight/></article></TiltCard></StaggerItem>)}</StaggerReveal></section>};function Showcase(){return <section className="showcase"><Reveal><p className="eyebrow purple">WORK WITH A POINT OF VIEW</p><h2>Your portfolio should<br/>feel like a <i>front row seat.</i></h2></Reveal><StaggerReveal className="showcase-grid">{[['Rhea Singh','Live vocalist',photos[0]],['Arjun Mehta','Visual storyteller',photos[1]],['Naina Kapoor','Event stylist',photos[2]]].map(([name,skill,image])=><StaggerItem key={name}><TiltCard><article className="creator-card"><img src={image} alt={`Representative creative showcase: ${name}`} loading="lazy"/><div><b>{name}</b><span>{skill}</span><small><MapPin size={13}/> India</small></div></article></TiltCard></StaggerItem>)}</StaggerReveal><p className="representative">Representative profiles — your work, your story, your proof.</p></section>};function Trust(){return <section className="trust"><Reveal><p className="eyebrow purple">BUILT ON GOOD WORK</p><h2>Creative work is personal.</h2></Reveal><StaggerReveal className="trust-grid">{[[<ShieldCheck/>, 'Profiles with substance','Show the work behind the name.'],[<Sparkles/>, 'Less chasing','More time for creating.'],[<ShieldCheck/>, 'Clearer expectations','Better starts for every conversation.']].map(([icon,title,text])=><StaggerItem key={String(title)}><TiltCard><article>{icon as React.ReactNode}<h3>{title as string}</h3><p>{text as string}</p></article></TiltCard></StaggerItem>)}</StaggerReveal></section>};function FaqPreview(){return <section className="faq-preview"><Reveal><p className="eyebrow purple">FAQ</p><h2>Good questions deserve straight answers.</h2></Reveal>{faqItems.slice(0,3).map(([q,a],index)=><Reveal key={q} delay={index*.06}><details><summary>{q}</summary><p>{a}</p></details></Reveal>)}</section>}
-export function InfoPage({title,eyebrow,children,open,role}:{title:string;eyebrow:string;children:React.ReactNode;open:(r?:Role)=>void;role?:Role}){return <Page title={title}><section className="inner-hero"><Reveal><p className="eyebrow purple">{eyebrow}</p><h1>{title}</h1><div className="prose">{children}</div>{role&&<Button className="magnetic" onClick={()=>open(role)}>{role==='artist'?'Create Your Artist Profile':'Start Hiring'} <ChevronRight size={17}/></Button>}</Reveal><CreativeIllustration className="inner-illustration"/></section>{role&&<CTA open={open} role={role}/>}</Page>}
-export function FAQPage(){return <Page title="Frequently Asked Questions"><section className="inner-hero"><Reveal><p className="eyebrow purple">FAQ</p><h1>Answers, without the runaround.</h1></Reveal><div className="faq-list">{faqItems.map(([q,a])=><FAQItem key={q} question={q} answer={a}/>)}</div></section></Page>};function FAQItem({question,answer}:{question:string;answer:string}){const [open,setOpen]=useState(false);return <article><button aria-expanded={open} onClick={()=>setOpen(!open)}>{question}<motion.span animate={{rotate:open?45:0}}>+</motion.span></button><AnimatePresence initial={false}>{open&&<motion.p initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} transition={{duration:motionTokens.standard}}>{answer}</motion.p>}</AnimatePresence></article>}
-export function LegalPage({kind}:{kind:'Privacy Policy'|'Terms'}){return <Page title={kind}><section className="inner-hero legal"><Reveal><p className="eyebrow purple">LEGAL</p><h1>{kind}</h1><p>Last updated: [DATE]</p><h2>What we collect</h2><p>Cultgig collects the information you provide while creating a profile: email, name, city, profile image, portfolio media, social links, and relevant business information.</p><h2>How we use it</h2><p>We use profile information to operate and improve the Cultgig onboarding experience and, as the marketplace develops, to help facilitate relevant connections. This policy is issued by [LEGAL ENTITY NAME], [REGISTERED ADDRESS].</p><h2>Contact</h2><p>For questions, contact [SUPPORT EMAIL].</p></Reveal></section></Page>};export function NotFoundPage({open}:{open:(r?:Role)=>void}){return <Page title="Page Not Found"><section className="inner-hero not-found"><CreativeIllustration/><Reveal><p className="eyebrow purple">404</p><h1>Looks like this gig disappeared.</h1><p>Let’s get you back to Cultgig.</p><Button onClick={()=>location.assign('/')}>Go home</Button> <Button variant="outline" onClick={()=>open()}>Get Started</Button></Reveal></section></Page>}
+import {
+  ChevronRight,
+  Music2,
+  BriefcaseBusiness,
+  ShieldCheck,
+  Sparkles,
+  ArrowUpRight,
+} from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { Button } from "../components/ui/Button";
+import { HumanImageCard } from "../components/ui/HumanImageCard";
+import {
+  CreativeIllustration,
+  FloatingVisual,
+  ParallaxImage,
+  Reveal,
+  StaggerItem,
+  StaggerReveal,
+  TiltCard,
+} from "../components/motion/MotionPrimitives";
+import { faqItems } from "../content/faq";
+import { homeContent } from "../content/home";
+import {
+  categoryImages,
+  heroImage,
+  pageImages,
+  showcaseCreators,
+} from "../content/images";
+import { testimonialItems } from "../content/testimonials";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { motionTokens } from "../styles/motion";
+import type { Role } from "../types/onboarding";
+function Page({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  usePageMeta(title);
+  const reduced = useReducedMotion();
+  return (
+    <motion.main
+      className="page"
+      initial={reduced ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: motionTokens.standard,
+        ease: motionTokens.easeOut,
+      }}
+    >
+      {children}
+    </motion.main>
+  );
+}
+function CTA({ open, role }: { open: (r?: Role) => void; role?: Role }) {
+  return (
+    <section className="cta-band">
+      <Reveal>
+        <div>
+          <p className="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+          <h2>
+            Ready to get <i>discovered?</i>
+          </h2>
+        </div>
+      </Reveal>
+      <Button variant="light" className="magnetic" onClick={() => open(role)}>
+        Get Started <ChevronRight size={17} />
+      </Button>
+    </section>
+  );
+}
+export function HomePage({ open }: { open: (r?: Role) => void }) {
+  usePageMeta("Where Artists & Gigs Get Discovered");
+  return (
+    <main>
+      <section className="hero">
+        <div className="hero-media">
+          <ParallaxImage src={heroImage.src} alt={heroImage.alt} />
+        </div>
+        <FloatingVisual />
+        <motion.div
+          className="hero-copy"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.12 } },
+          }}
+        >
+          <motion.p
+            className="eyebrow"
+            variants={{
+              hidden: { opacity: 0, y: 15 },
+              show: { opacity: 1, y: 0 },
+            }}
+          >
+            {homeContent.hero.eyebrow}
+          </motion.p>
+          <motion.h1
+            variants={{
+              hidden: { opacity: 0, y: 32 },
+              show: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: motionTokens.slow,
+                  ease: motionTokens.easeOut,
+                },
+              },
+            }}
+          >
+            {homeContent.hero.titleMain}
+            <i>{homeContent.hero.titleAccent}</i>
+            {homeContent.hero.titleEnd}
+          </motion.h1>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0 },
+            }}
+          >
+            {homeContent.hero.subtitle}
+          </motion.p>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              show: { opacity: 1, y: 0 },
+            }}
+          >
+            <Button className="magnetic" onClick={() => open("artist")}>
+              {homeContent.hero.artistCta} <Music2 size={17} />
+            </Button>
+            <Button
+              className="magnetic"
+              variant="light"
+              onClick={() => open("client")}
+            >
+              {homeContent.hero.clientCta} <BriefcaseBusiness size={17} />
+            </Button>
+          </motion.div>
+        </motion.div>
+        <div className="hero-orbit hero-orbit-a" />
+        <div className="hero-orbit hero-orbit-b" />
+      </section>
+      <Audience open={open} />
+      <Split />
+      <How />
+      <Categories />
+      <Showcase />
+      <Trust />
+      <FaqPreview />
+      <CTA open={open} />
+    </main>
+  );
+}
+function Audience({ open }: { open: (r?: Role) => void }) {
+  return (
+    <section className="audience">
+      <Reveal>
+        <p className="eyebrow purple">{homeContent.audienceSplit.eyebrow}</p>
+        <h2>{homeContent.audienceSplit.heading}</h2>
+      </Reveal>
+      <StaggerReveal className="audience-grid">
+        <StaggerItem>
+          <TiltCard>
+            <article className="audience-card artist-card">
+              <Music2 />
+              <p>{homeContent.audienceSplit.artist.badge}</p>
+              <h3>{homeContent.audienceSplit.artist.title}</h3>
+              <span>{homeContent.audienceSplit.artist.description}</span>
+              <Button variant="outline" onClick={() => open("artist")}>
+                {homeContent.audienceSplit.artist.cta}{" "}
+                <ArrowUpRight size={16} />
+              </Button>
+            </article>
+          </TiltCard>
+        </StaggerItem>
+        <StaggerItem>
+          <TiltCard>
+            <article className="audience-card business-card">
+              <BriefcaseBusiness />
+              <p>{homeContent.audienceSplit.client.badge}</p>
+              <h3>{homeContent.audienceSplit.client.title}</h3>
+              <span>{homeContent.audienceSplit.client.description}</span>
+              <Button variant="outline" onClick={() => open("client")}>
+                {homeContent.audienceSplit.client.cta}{" "}
+                <ArrowUpRight size={16} />
+              </Button>
+            </article>
+          </TiltCard>
+        </StaggerItem>
+      </StaggerReveal>
+    </section>
+  );
+}
+function Split() {
+  return (
+    <section className="split">
+      <Reveal>
+        <p className="eyebrow purple">{homeContent.problem.eyebrow}</p>
+        <h2>{homeContent.problem.heading}</h2>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <div>
+          {homeContent.problem.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+function How() {
+  return (
+    <section className="surface how-section">
+      <Reveal>
+        <p className="eyebrow purple">{homeContent.howItWorks.eyebrow}</p>
+        <h2>{homeContent.howItWorks.heading}</h2>
+      </Reveal>
+      <StaggerReveal className="tracks">
+        <StaggerItem>
+          <Track
+            title="For artists"
+            icon={<Music2 />}
+            items={homeContent.howItWorks.artistTrack.steps.map(
+              (step) => step.title,
+            )}
+          />
+        </StaggerItem>
+        <StaggerItem>
+          <Track
+            title="For businesses"
+            icon={<BriefcaseBusiness />}
+            items={homeContent.howItWorks.clientTrack.steps.map(
+              (step) => step.title,
+            )}
+          />
+        </StaggerItem>
+      </StaggerReveal>
+    </section>
+  );
+}
+function Track({
+  title,
+  icon,
+  items,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  items: string[];
+}) {
+  return (
+    <TiltCard>
+      <article className="track">
+        <b>
+          {icon}
+          {title}
+        </b>
+        {items.map((x, i) => (
+          <p key={x}>
+            <span>0{i + 1}</span>
+            {x}
+            <ArrowUpRight size={14} />
+          </p>
+        ))}
+      </article>
+    </TiltCard>
+  );
+}
+function Categories() {
+  return (
+    <section id="categories" className="categories">
+      <Reveal>
+        <p className="eyebrow">{homeContent.categories.eyebrow}</p>
+        <h2>{homeContent.categories.heading}</h2>
+      </Reveal>
+      <StaggerReveal className="category-grid">
+        {Object.values(categoryImages).map((category, i) => (
+          <StaggerItem key={category.category}>
+            <TiltCard>
+              <article
+                className="category-card"
+                style={{
+                  backgroundImage: `linear-gradient(0deg,rgba(20,5,17,.8),transparent),url(${category.src})`,
+                }}
+                role="img"
+                aria-label={category.category}
+              >
+                <small>0{i + 1}</small>
+                <span>{category.category}</span>
+                <ArrowUpRight />
+              </article>
+            </TiltCard>
+          </StaggerItem>
+        ))}
+      </StaggerReveal>
+    </section>
+  );
+}
+function Showcase() {
+  return (
+    <section className="showcase">
+      <Reveal>
+        <p className="eyebrow purple">{homeContent.showcase.eyebrow}</p>
+        <h2>{homeContent.showcase.heading}</h2>
+      </Reveal>
+      <StaggerReveal className="showcase-grid">
+        {showcaseCreators.slice(0, 3).map((creator, index) => (
+          <StaggerItem key={creator.name}>
+            <TiltCard>
+              <HumanImageCard
+                src={creator.image}
+                alt={`Representative creative showcase: ${creator.name}`}
+                eyebrow={creator.category}
+                name={creator.name}
+                role={creator.role}
+                location={creator.city}
+                eager={index === 0}
+              />
+            </TiltCard>
+          </StaggerItem>
+        ))}
+      </StaggerReveal>
+      <p className="representative">{homeContent.showcase.disclaimer}</p>
+    </section>
+  );
+}
+function Trust() {
+  return (
+    <section className="trust">
+      <Reveal>
+        <p className="eyebrow purple">BUILT ON GOOD WORK</p>
+        <h2>Creative work is personal.</h2>
+      </Reveal>
+      <StaggerReveal className="trust-grid">
+        {homeContent.trust.pillars.map((pillar, index) => (
+          <StaggerItem key={pillar.title}>
+            <TiltCard>
+              <article>
+                {index === 1 ? <Sparkles /> : <ShieldCheck />}
+                <h3>{pillar.title}</h3>
+                <p>{pillar.desc}</p>
+              </article>
+            </TiltCard>
+          </StaggerItem>
+        ))}
+      </StaggerReveal>
+    </section>
+  );
+}
+function FaqPreview() {
+  return (
+    <section className="faq-preview">
+      <Reveal>
+        <p className="eyebrow purple">FAQ</p>
+        <h2>Good questions deserve straight answers.</h2>
+      </Reveal>
+      {faqItems.slice(0, 3).map(([q, a], index) => (
+        <Reveal key={q} delay={index * 0.06}>
+          <details>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        </Reveal>
+      ))}
+      {!testimonialItems.length && (
+        <p className="empty-state">
+          Community voices will appear here as more artists and businesses join.
+        </p>
+      )}
+    </section>
+  );
+}
+export function InfoPage({
+  title,
+  eyebrow,
+  children,
+  open,
+  role,
+  image,
+}: {
+  title: string;
+  eyebrow: string;
+  children: React.ReactNode;
+  open: (r?: Role) => void;
+  role?: Role;
+  image?: { src: string; alt: string };
+}) {
+  return (
+    <Page title={title}>
+      <section className="inner-hero">
+        <Reveal>
+          <p className="eyebrow purple">{eyebrow}</p>
+          <h1>{title}</h1>
+          <div className="prose">{children}</div>
+          {role && (
+            <Button className="magnetic" onClick={() => open(role)}>
+              {role === "artist"
+                ? "Create Your Artist Profile"
+                : "Start Hiring"}{" "}
+              <ChevronRight size={17} />
+            </Button>
+          )}
+        </Reveal>
+        {image && (
+          <img
+            className="inner-hero-image"
+            src={image.src}
+            alt={image.alt}
+            loading="eager"
+          />
+        )}
+        <CreativeIllustration className="inner-illustration" />
+      </section>
+      {role && <CTA open={open} role={role} />}
+    </Page>
+  );
+}
+export function FAQPage() {
+  return (
+    <Page title="Frequently Asked Questions">
+      <section className="inner-hero">
+        <Reveal>
+          <p className="eyebrow purple">FAQ</p>
+          <h1>Answers, without the runaround.</h1>
+        </Reveal>
+        <div className="faq-list">
+          {faqItems.map(([q, a]) => (
+            <FAQItem key={q} question={q} answer={a} />
+          ))}
+        </div>
+      </section>
+    </Page>
+  );
+}
+function FAQItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <article>
+      <button aria-expanded={open} onClick={() => setOpen(!open)}>
+        {question}
+        <motion.span animate={{ rotate: open ? 45 : 0 }}>+</motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.p
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: motionTokens.standard }}
+          >
+            {answer}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </article>
+  );
+}
+export function LegalPage({ kind }: { kind: "Privacy Policy" | "Terms" }) {
+  return (
+    <Page title={kind}>
+      <section className="inner-hero legal">
+        <Reveal>
+          <p className="eyebrow purple">LEGAL</p>
+          <h1>{kind}</h1>
+          <p>Last updated: [DATE]</p>
+          <h2>What we collect</h2>
+          <p>
+            Cultgig collects the information you provide while creating a
+            profile: email, name, city, profile image, portfolio media, social
+            links, and relevant business information.
+          </p>
+          <h2>How we use it</h2>
+          <p>
+            We use profile information to operate and improve the Cultgig
+            onboarding experience and, as the marketplace develops, to help
+            facilitate relevant connections. This policy is issued by [LEGAL
+            ENTITY NAME], [REGISTERED ADDRESS].
+          </p>
+          <h2>Contact</h2>
+          <p>For questions, contact [SUPPORT EMAIL].</p>
+        </Reveal>
+      </section>
+    </Page>
+  );
+}
+export function NotFoundPage({ open }: { open: (r?: Role) => void }) {
+  return (
+    <Page title="Page Not Found">
+      <section className="inner-hero not-found">
+        <CreativeIllustration />
+        <Reveal>
+          <p className="eyebrow purple">404</p>
+          <h1>Looks like this gig disappeared.</h1>
+          <p>Let’s get you back to Cultgig.</p>
+          <Button onClick={() => location.assign("/")}>Go home</Button>{" "}
+          <Button variant="outline" onClick={() => open()}>
+            Get Started
+          </Button>
+        </Reveal>
+      </section>
+    </Page>
+  );
+}
