@@ -1,4 +1,11 @@
 export const homeContent = {
+  app: {
+    eyebrow: "CULTGIG, IN YOUR POCKET",
+    heading: "A simpler way to carry your creative profile.",
+    description:
+      "The Cultgig mobile experience is coming soon. Keep your work, story, and next creative introduction closer at hand.",
+    badge: "Coming soon",
+  },
   hero: {
     eyebrow: "INDIA'S INDEPENDENT CREATIVE MARKETPLACE",
     titleMain: "Where Artists & ",
