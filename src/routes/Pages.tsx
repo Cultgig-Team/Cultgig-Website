@@ -14,12 +14,17 @@ import { HumanImageCard } from "../components/ui/HumanImageCard";
 import {
   CreativeIllustration,
   FloatingVisual,
+  Magnet,
+  Marquee,
   ParallaxImage,
   Reveal,
+  ScrollRevealText,
   StaggerItem,
   StaggerReveal,
+  StickyStackCard,
   TiltCard,
 } from "../components/motion/MotionPrimitives";
+import { NumberedListItem } from "../components/ui/NumberedListItem";
 import { faqItems } from "../content/faq";
 import { homeContent } from "../content/home";
 import {
@@ -30,6 +35,7 @@ import {
   showcaseCreators,
 } from "../content/images";
 import { testimonialItems } from "../content/testimonials";
+import { siteConfig } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { motionTokens } from "../styles/motion";
 import type { Role } from "../types/onboarding";
@@ -79,7 +85,9 @@ function FloatingProfileChip() {
       animate={{ opacity: 1, y: 0, rotate: -4 }}
       transition={{ delay: motionTokens.standard, duration: motionTokens.reveal, ease: motionTokens.easeOut }}
     >
-      <img src={floatingCreatorThumb.src} alt={floatingCreatorThumb.alt} width="72" height="72" />
+      <Magnet padding={80} strength={5}>
+        <img src={floatingCreatorThumb.src} alt={floatingCreatorThumb.alt} width="72" height="72" />
+      </Magnet>
       <figcaption>
         <small>{homeContent.hero.floatingChip.label}</small>
         <strong>{homeContent.hero.floatingChip.description}</strong>
@@ -128,7 +136,7 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
               },
             }}
           >
-            {homeContent.hero.titleMain}
+            <span className="brand-gradient-text">{homeContent.hero.titleMain}</span>
             <i>{homeContent.hero.titleAccent}</i>
             {homeContent.hero.titleEnd}
           </motion.h1>
@@ -146,7 +154,7 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
               show: { opacity: 1, y: 0 },
             }}
           >
-            <Button className="magnetic" onClick={() => open("artist")}>
+            <Button variant="glow" className="magnetic" onClick={() => open("artist")}>
               {homeContent.hero.artistCta} <Music2 size={17} />
             </Button>
             <Button
@@ -161,6 +169,10 @@ export function HomePage({ open }: { open: (r?: Role) => void }) {
         <div className="hero-orbit hero-orbit-a" />
         <div className="hero-orbit hero-orbit-b" />
       </section>
+      <Marquee items={[
+        ...Object.entries(categoryImages).map(([id, image]) => ({ id, src: image.src, alt: image.alt })),
+        ...showcaseCreators.map((creator) => ({ id: creator.name, src: creator.image, alt: `${creator.category} profile for ${creator.name}` })),
+      ]} />
       <Audience open={open} />
       <Split />
       <How />
@@ -227,9 +239,7 @@ function Split() {
       </Reveal>
       <Reveal delay={0.08}>
         <div>
-          {homeContent.problem.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+          <ScrollRevealText text={homeContent.problem.paragraphs.join(" ")} />
         </div>
       </Reveal>
       <CreativeIllustration className="problem-illustration" />
@@ -249,18 +259,14 @@ function How() {
           <Track
             title="For artists"
             icon={<Music2 />}
-            items={homeContent.howItWorks.artistTrack.steps.map(
-              (step) => step.title,
-            )}
+            steps={homeContent.howItWorks.artistTrack.steps}
           />
         </StaggerItem>
         <StaggerItem>
           <Track
             title="For businesses"
             icon={<BriefcaseBusiness />}
-            items={homeContent.howItWorks.clientTrack.steps.map(
-              (step) => step.title,
-            )}
+            steps={homeContent.howItWorks.clientTrack.steps}
           />
         </StaggerItem>
       </StaggerReveal>
@@ -270,11 +276,11 @@ function How() {
 function Track({
   title,
   icon,
-  items,
+  steps,
 }: {
   title: string;
   icon: React.ReactNode;
-  items: string[];
+  steps: { num: string; title: string; desc: string }[];
 }) {
   return (
     <TiltCard>
@@ -283,13 +289,7 @@ function Track({
           {icon}
           {title}
         </b>
-        {items.map((x, i) => (
-          <p key={x}>
-            <span>0{i + 1}</span>
-            {x}
-            <ArrowUpRight size={14} />
-          </p>
-        ))}
+        {steps.map((step) => <NumberedListItem key={step.num} number={step.num} title={step.title} description={step.desc} />)}
       </article>
     </TiltCard>
   );
@@ -320,10 +320,10 @@ function Showcase() {
         <h2>{homeContent.showcase.heading}</h2>
         <p className="section-intro">{homeContent.showcase.subheading}</p>
       </Reveal>
-      <StaggerReveal className="showcase-grid">
+      <div className="sticky-stack">
         {showcaseCreators.map((creator, index) => (
-          <StaggerItem key={creator.name}>
-            <TiltCard>
+          <StickyStackCard key={creator.name} index={index} total={showcaseCreators.length}>
+            <Reveal delay={index * 0.08}>
               <HumanImageCard
                 src={creator.image}
                 alt={`Representative creative showcase: ${creator.name}`}
@@ -334,10 +334,10 @@ function Showcase() {
                 eager={index === 0}
                 variant={index === 0 ? "offset" : index === 1 ? "overlap" : "rect"}
               />
-            </TiltCard>
-          </StaggerItem>
+            </Reveal>
+          </StickyStackCard>
         ))}
-      </StaggerReveal>
+      </div>
       <p className="representative">{homeContent.showcase.disclaimer}</p>
     </section>
   );
@@ -395,6 +395,7 @@ export function InfoPage({
   open,
   role,
   image,
+  stepGroups,
 }: {
   title: string;
   eyebrow: string;
@@ -402,13 +403,14 @@ export function InfoPage({
   open: (r?: Role) => void;
   role?: Role;
   image?: { src: string; alt: string };
+  stepGroups?: { title: string; steps: { num: string; title: string; desc: string }[] }[];
 }) {
   return (
     <Page title={title}>
       <section className="inner-hero">
         <Reveal>
           <p className="eyebrow purple">{eyebrow}</p>
-          <h1>{title}</h1>
+          <h1 className="brand-gradient-text">{title}</h1>
           <div className="prose">{children}</div>
           {role && (
             <Button className="magnetic" onClick={() => open(role)}>
@@ -429,6 +431,18 @@ export function InfoPage({
         )}
         <CreativeIllustration className="inner-illustration" />
       </section>
+      {stepGroups && (
+        <section className="editorial-workflows">
+          {stepGroups.map((group) => (
+            <div className="editorial-workflow" key={group.title}>
+              <p className="eyebrow purple">{group.title}</p>
+              {group.steps.map((step) => (
+                <NumberedListItem key={step.num} number={step.num} title={step.title} description={step.desc} />
+              ))}
+            </div>
+          ))}
+        </section>
+      )}
       {role && <CTA open={open} role={role} />}
     </Page>
   );
@@ -452,15 +466,24 @@ export function FAQPage() {
 }
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
+  const panelId = `faq-${question.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   return (
     <article>
-      <button aria-expanded={open} onClick={() => setOpen(!open)}>
+      <button
+        id={`${panelId}-trigger`}
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen(!open)}
+      >
         {question}
         <motion.span animate={{ rotate: open ? 45 : 0 }}>+</motion.span>
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.p
+            id={panelId}
+            role="region"
+            aria-labelledby={`${panelId}-trigger`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -474,13 +497,14 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 export function LegalPage({ kind }: { kind: "Privacy Policy" | "Terms" }) {
+  const { legalEntityName, registeredAddress, supportEmail } = siteConfig;
   return (
     <Page title={kind}>
       <section className="inner-hero legal">
         <Reveal>
           <p className="eyebrow purple">LEGAL</p>
           <h1>{kind}</h1>
-          <p>Last updated: [DATE]</p>
+          <p>Last updated: August 19, 2026</p>
           <h2>What we collect</h2>
           <p>
             Cultgig collects the information you provide while creating a
@@ -491,11 +515,14 @@ export function LegalPage({ kind }: { kind: "Privacy Policy" | "Terms" }) {
           <p>
             We use profile information to operate and improve the Cultgig
             onboarding experience and, as the marketplace develops, to help
-            facilitate relevant connections. This policy is issued by [LEGAL
-            ENTITY NAME], [REGISTERED ADDRESS].
+            facilitate relevant connections. This policy is maintained by{" "}
+            {legalEntityName}
+            {registeredAddress ? ` at ${registeredAddress}` : ""}.
           </p>
           <h2>Contact</h2>
-          <p>For questions, contact [SUPPORT EMAIL].</p>
+          <p>
+            For questions, contact us{supportEmail ? ` at ${supportEmail}` : ""}.
+          </p>
         </Reveal>
       </section>
     </Page>

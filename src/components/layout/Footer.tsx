@@ -29,24 +29,21 @@ export function Footer() {
         <Link to="/privacy">Privacy Policy</Link>
         <Link to="/terms">Terms</Link>
         <div className="social">
-          <a
-            aria-label="Cultgig on Instagram"
-            href={siteConfig.socialLinks.instagram}
-          >
-            <Camera />
-          </a>
-          <a
-            aria-label="Cultgig on LinkedIn"
-            href={siteConfig.socialLinks.linkedin}
-          >
-            <LinkIcon />
-          </a>
-          <a
-            aria-label="Cultgig on YouTube"
-            href={siteConfig.socialLinks.youtube}
-          >
-            <Play />
-          </a>
+          {siteConfig.socialLinks.instagram && (
+            <a aria-label="Cultgig on Instagram" href={siteConfig.socialLinks.instagram} rel="noreferrer">
+              <Camera />
+            </a>
+          )}
+          {siteConfig.socialLinks.linkedin && (
+            <a aria-label="Cultgig on LinkedIn" href={siteConfig.socialLinks.linkedin} rel="noreferrer">
+              <LinkIcon />
+            </a>
+          )}
+          {siteConfig.socialLinks.youtube && (
+            <a aria-label="Cultgig on YouTube" href={siteConfig.socialLinks.youtube} rel="noreferrer">
+              <Play />
+            </a>
+          )}
         </div>
       </div>
       <small>

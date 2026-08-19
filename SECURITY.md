@@ -7,7 +7,8 @@
 - **XSS protection**: No `dangerouslySetInnerHTML`, `innerHTML`, or `eval()` usage anywhere in the codebase
 - **Production source maps**: Disabled (Vite default); source maps are never shipped in production builds
 - **Environment variables**: All secrets loaded via `.env`; Appwrite client SDK uses public project ID and endpoint (intentional for browser clients)
-- **Dev bypass removal**: The local OTP bypass code (`"123456"`) in `src/lib/appwriteAuth.ts` is correctly gated by `import.meta.env.DEV` and does NOT appear in production bundle
+- **Dev bypass removal**: The application OTP bypass branch is correctly gated by `import.meta.env.DEV`; application-specific bypass strings are absent from the production bundle. A generic `123456` numeric alphabet appears in bundled dependency data and is unrelated to OTP handling.
+- **Security headers**: Configure CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS, and frame protection at the hosting/CDN layer. These headers are intentionally not encoded in the Vite client bundle.
 
 ## ⚠️ Pre-Launch Action Required
 

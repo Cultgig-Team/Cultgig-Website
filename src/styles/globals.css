@@ -32,6 +32,7 @@ body {
   color: var(--color-text-primary);
   font-family: Inter, sans-serif;
   background: var(--color-bg);
+  overflow-x: clip;
 }
 button,
 input,
@@ -92,6 +93,19 @@ textarea:focus-visible {
 .button-primary {
   background: var(--color-primary);
   color: #fff;
+}
+.button-glow {
+  background: linear-gradient(123deg, var(--color-primary-dark), var(--color-primary), var(--color-secondary-dark));
+  color: #fff;
+  box-shadow: var(--shadow-floating), inset 0 1px 0 #ffffffaa;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+}
+.brand-gradient-text {
+  background: linear-gradient(180deg, var(--color-primary-dark) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .button-primary:hover:not(:disabled) {
   background: var(--color-primary-dark);
@@ -356,6 +370,16 @@ details p {
   font-size: clamp(42px, 6vw, 72px);
   margin-bottom: 22px;
 }
+.editorial-workflows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  padding: 0 7% 100px;
+  background: var(--color-surface);
+}
+.editorial-workflow .numbered-list-item:first-of-type {
+  border-top: 0;
+}
 .prose {
   margin-bottom: 28px;
 }
@@ -562,6 +586,11 @@ details p {
   .tracks {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+  .editorial-workflows {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 24px 68px;
   }
   .split,
   .surface,

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cultgig.com/sitemap.xml

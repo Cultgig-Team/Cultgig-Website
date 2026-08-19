@@ -4,6 +4,8 @@ import { Header } from "../components/layout/Header";
 import { OnboardingModal } from "../components/onboarding/OnboardingModal";
 import { OnboardingProvider } from "../state/onboardingContext";
 import { pageImages } from "../content/images";
+import { siteConfig } from "../config/site";
+import { homeContent } from "../content/home";
 import type { Role } from "../types/onboarding";
 import {
   FAQPage,
@@ -86,6 +88,10 @@ export default function App() {
           eyebrow="HOW IT WORKS"
           open={open}
           image={pageImages.howItWorksHero}
+          stepGroups={[
+            { title: "For artists", steps: homeContent.howItWorks.artistTrack.steps },
+            { title: "For businesses", steps: homeContent.howItWorks.clientTrack.steps },
+          ]}
         >
           Artists create a profile, show their work, and tell us where they are.
           Businesses share what they need. Discovery and booking are future
@@ -101,6 +107,7 @@ export default function App() {
           open={open}
           role="artist"
           image={pageImages.forArtistsHero}
+          stepGroups={[{ title: "Artist path", steps: homeContent.howItWorks.artistTrack.steps }]}
         >
           Build a profile that reflects your craft — from musicians and DJs to
           photographers, decorators, dancers, and performers. A profile is the
@@ -116,6 +123,7 @@ export default function App() {
           open={open}
           role="client"
           image={pageImages.forBusinessesHero}
+          stepGroups={[{ title: "Business path", steps: homeContent.howItWorks.clientTrack.steps }]}
         >
           Tell us about your business and creative needs. Profile-based
           discovery and booking are where Cultgig is headed; joining now helps
@@ -130,8 +138,17 @@ export default function App() {
       page = (
         <InfoPage title="Let’s talk." eyebrow="CONTACT" open={open}>
           For general questions, artist support, or partnership conversations,
-          contact [SUPPORT EMAIL]. Please replace this placeholder in{" "}
-          <code>src/config/site.ts</code> before launch.
+          {siteConfig.supportEmail ? (
+            <>
+              {" "}email us at{" "}
+              <a href={`mailto:${siteConfig.supportEmail}`}>
+                {siteConfig.supportEmail}
+              </a>
+              .
+            </>
+          ) : (
+            " reach out through the contact details configured for this deployment."
+          )}
         </InfoPage>
       );
       break;

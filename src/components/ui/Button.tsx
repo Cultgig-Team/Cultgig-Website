@@ -6,7 +6,7 @@ export function Button({
   ...props
 }: {
   children: ReactNode;
-  variant?: "primary" | "light" | "outline";
+  variant?: "primary" | "light" | "outline" | "glow";
 } & ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button className={`button button-${variant} ${className}`} {...props}>

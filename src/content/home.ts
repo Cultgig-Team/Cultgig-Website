@@ -31,7 +31,7 @@ export const homeContent = {
     },
     client: {
       badge: "FOR VENUES, BRANDS & ORGANIZERS",
-      title: "Hire verified creative talent without the friction.",
+      title: "Find the right creative talent without the friction.",
       description:
         "Share what your business needs and help shape the foundation for more thoughtful creative introductions.",
       cta: "Start Hiring Talent",

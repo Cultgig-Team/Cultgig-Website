@@ -67,6 +67,13 @@
 }
 .hero-copy h1 {
   max-width: 740px;
+  font-size: clamp(52px, 8vw, 118px);
+  text-transform: uppercase;
+  line-height: 0.98;
+}
+.hero-copy h1 .brand-gradient-text {
+  display: inline;
+  background-image: linear-gradient(180deg, var(--color-secondary) 0%, #fff 100%);
 }
 .hero-copy > p:not(.eyebrow) {
   font-size: 18px;
@@ -180,6 +187,75 @@
 .audience {
   padding: 100px 7%;
   background: linear-gradient(145deg, #fff 55%, var(--color-primary-tint));
+}
+.marquee {
+  padding: 72px 0 34px;
+  overflow: hidden;
+  background: #191116;
+  display: grid;
+  gap: 12px;
+}
+.marquee-row {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  will-change: transform;
+}
+.marquee-row img {
+  width: 220px;
+  height: 142px;
+  border-radius: 18px;
+  object-fit: cover;
+  opacity: 0.88;
+  filter: saturate(0.82);
+}
+.numbered-list-item {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.24fr) 1fr;
+  gap: 22px;
+  align-items: start;
+  padding: 25px 0;
+  border-top: 1px solid rgba(26, 26, 26, 0.15);
+}
+.numbered-list-item strong {
+  color: var(--color-primary);
+  font: 700 clamp(42px, 7vw, 92px)/0.9 Poppins, sans-serif;
+  letter-spacing: -4px;
+}
+.numbered-list-item h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(19px, 2.4vw, 31px);
+  text-transform: uppercase;
+}
+.numbered-list-item h3 svg {
+  width: 18px;
+  color: var(--color-primary);
+}
+.numbered-list-item p {
+  max-width: 650px;
+  margin: 8px 0 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  font-size: clamp(14px, 1.4vw, 18px);
+}
+.sticky-stack {
+  display: grid;
+  gap: 28px;
+  margin-top: 42px;
+}
+.sticky-stack-card {
+  position: sticky;
+  min-height: 300px;
+  transform-origin: top center;
+}
+.sticky-stack-card .human-card {
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-raised);
+}
+.scroll-reveal-text span {
+  display: inline;
 }
 .audience-grid {
   display: grid;
@@ -672,9 +748,20 @@
     padding: 72px 24px;
   }
   .audience-grid,
-  .showcase-grid,
   .trust-grid {
     grid-template-columns: 1fr;
+  }
+  .marquee {
+    padding-top: 48px;
+  }
+  .marquee-row img {
+    width: 180px;
+    height: 116px;
+  }
+  .sticky-stack-card {
+    position: relative;
+    top: auto !important;
+    transform: none !important;
   }
   .category-grid {
     grid-template-columns: 1fr 1fr;
@@ -737,5 +824,13 @@
   }
   .done > svg {
     animation: none;
+  }
+  .marquee-row {
+    transform: none !important;
+  }
+  .sticky-stack-card {
+    position: relative;
+    top: auto !important;
+    transform: none !important;
   }
 }
