@@ -14,7 +14,7 @@ function safeEmail(value: string | undefined) {
 
 export const siteConfig = {
   name: "Cultgig",
-  tagline: "Where Artists & Gigs Get Discovered.",
+  tagline: "Where creative talent meets opportunity.",
   supportEmail: safeEmail(import.meta.env.VITE_SUPPORT_EMAIL),
   legalEntityName: import.meta.env.VITE_LEGAL_ENTITY_NAME || "Cultgig",
   registeredAddress: import.meta.env.VITE_REGISTERED_ADDRESS || "",
@@ -26,16 +26,13 @@ export const siteConfig = {
 } as const;
 
 export const pageDescriptions: Record<string, string> = {
-  "Where Artists & Gigs Get Discovered":
-    "Create a thoughtful Cultgig profile and help shape a better way for artists and businesses to meet.",
+  "The future of creative discovery":
+    "Cultgig is building a trusted space where artists and businesses can discover each other and build meaningful professional connections.",
   "A better place for creative work.":
     "Learn why Cultgig is building a more thoughtful starting point for creative work in India.",
-  "A clearer start for every collaboration.":
-    "See how Cultgig onboarding gives artists and businesses a clearer foundation for future creative connections.",
-  "Your work is your proof.":
-    "Create an artist profile for your craft, story, location, portfolio, and creative identity.",
-  "Find the right creative fit.":
-    "Tell Cultgig what your business needs and help shape better creative introductions.",
+  "How Cultgig works": "See how Cultgig is building a clearer path to creative connection.",
+  "For Artists": "Your work deserves to be discovered. Join the Cultgig early-access list.",
+  "For Businesses": "Better creative connections start here. Get Cultgig launch updates.",
   "Frequently Asked Questions":
     "Straight answers about Cultgig profiles, onboarding, supported creative categories, and the marketplace roadmap.",
   "Let’s talk.":

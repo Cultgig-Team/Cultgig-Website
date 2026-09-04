@@ -3,7 +3,7 @@ import { pageDescriptions, siteConfig } from "../config/site";
 import { detailedFaqList } from "../content/faq";
 
 const defaultDescription =
-  "Cultgig is the two-sided creative marketplace connecting verified independent artists with event hosts, venues, and businesses across India. Book with confidence.";
+  "Cultgig is building a trusted space where artists and businesses can discover each other and build meaningful professional connections.";
 
 export function usePageMeta(
   title: string,
@@ -92,11 +92,6 @@ export function usePageMeta(
         "@type": "WebSite",
         name: siteConfig.name,
         url: window.location.origin,
-        potentialAction: {
-          "@type": "SearchAction",
-          target: `${window.location.origin}/#discover-artists?q={search_term_string}`,
-          "query-input": "required name=search_term_string",
-        },
       };
       structuredData.textContent = JSON.stringify([orgSchema, websiteSchema]);
     }

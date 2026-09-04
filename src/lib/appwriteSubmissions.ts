@@ -1,10 +1,14 @@
 import { ID } from "appwrite";
-import type { OnboardingSubmission } from "../types/onboarding";
 import { appwriteConfig, databases, isAppwriteConfigured } from "./appwrite";
-export async function saveSubmission(data: OnboardingSubmission) {
+export type LeadSubmission = Record<string, string> & {
+  role: "artist" | "business";
+  createdAt: string;
+};
+
+export async function saveLead(data: LeadSubmission) {
   if (!isAppwriteConfigured) return;
   if (!appwriteConfig.databaseId || !appwriteConfig.collectionId)
-    throw new Error("Profile saving is temporarily unavailable.");
+    throw new Error("Early access is temporarily unavailable.");
   await databases.createDocument({
     databaseId: appwriteConfig.databaseId,
     collectionId: appwriteConfig.collectionId,
