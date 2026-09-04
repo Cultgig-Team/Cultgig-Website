@@ -1,21 +1,25 @@
-import { Button } from "./Button";
-
-export function AppMockup({ onCreateProfile }: { onCreateProfile?: () => void }) {
+export function AppMockup() {
   return (
-    <div className="app-mockup-stage" aria-label="Concept preview of the upcoming Cultgig mobile app">
-      <div className="app-mockup">
-        <div className="app-mockup-screen">
-          <span className="app-mockup-status">9:41 <b>● ◒ ▰</b></span>
-          <span className="app-mockup-notch" />
-          <div className="app-mockup-topline"><strong>Cultgig</strong><span>Profile</span></div>
-          <div className="app-mockup-art" aria-hidden="true"><i /><b /><em /></div>
-          <p className="app-mockup-label">YOUR CREATIVE PROFILE</p>
-          <h3>Make your work easier to find.</h3>
-          <p className="app-mockup-copy">Keep your story, city, category, and creative proof ready for the next introduction.</p>
-          <div className="app-mockup-lines"><i /><i /><i /></div>
-          <Button variant="glow" className="app-mockup-button" onClick={onCreateProfile}>Create your profile</Button>
-          <div className="app-mockup-nav"><span>⌂</span><span>⌕</span><span>＋</span><span>◉</span></div>
-        </div>
+    <div className="app-preview" aria-label="Preview of the upcoming Cultgig mobile app">
+      <div className="app-preview-panel app-preview-side app-preview-discover">
+        <span className="app-preview-kicker">DISCOVER</span>
+        <strong>Find the work behind the idea.</strong>
+        <div className="preview-art preview-art-small" />
+        <small>Creative profiles</small>
+      </div>
+      <div className="app-preview-panel app-preview-main">
+        <div className="app-preview-topline"><strong>Cultgig</strong><span>Coming soon</span></div>
+        <span className="app-preview-kicker">CULTGIG APP</span>
+        <h3>Make room for what&apos;s next.</h3>
+        <p>Discover creative talent, opportunities, and better conversations.</p>
+        <div className="preview-art" />
+        <div className="preview-row"><span>Discover</span><span>Connect</span><span>Create</span></div>
+      </div>
+      <div className="app-preview-panel app-preview-side app-preview-connect">
+        <span className="app-preview-kicker">CONNECT</span>
+        <strong>Start the right conversation.</strong>
+        <div className="preview-message"><i /><span /><span /></div>
+        <small>Meaningful introductions</small>
       </div>
     </div>
   );
