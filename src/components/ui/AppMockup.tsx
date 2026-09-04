@@ -1,6 +1,6 @@
 import { Button } from "./Button";
 
-export function AppMockup({ onCreateProfile }: { onCreateProfile: () => void }) {
+export function AppMockup({ onCreateProfile }: { onCreateProfile?: () => void }) {
   return (
     <div className="app-mockup-stage" aria-label="Concept preview of the upcoming Cultgig mobile app">
       <div className="app-mockup">

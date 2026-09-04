@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight, PlusCircle, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "../../app/App";
@@ -6,45 +6,86 @@ import { mobileExtras, primaryNavigation } from "../../config/navigation";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { motionTokens } from "../../styles/motion";
 import { Button, IconButton } from "../ui/Button";
-export function Header({ openOnboarding }: { openOnboarding: () => void }) {
-  const [open, setOpen] = useState(false),
-    [scrolled, setScrolled] = useState(false);
+import type { Role } from "../../types/onboarding";
+
+export function Header({
+  openOnboarding,
+  openPostRequirement,
+  currentPath = "/",
+}: {
+  openOnboarding: (role?: Role) => void;
+  openPostRequirement: () => void;
+  currentPath?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
+
   useFocusTrap(ref, open, () => setOpen(false));
+
   useEffect(() => {
-    const update = () => setScrolled(scrollY > 18);
+    const update = () => setScrolled(window.scrollY > 18);
     update();
-    addEventListener("scroll", update, { passive: true });
-    return () => removeEventListener("scroll", update);
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
+
+  const isHero = currentPath === "/" && !scrolled;
+
   return (
-    <header
-      className={`site-header ${location.pathname === "/" && !scrolled ? "header-hero" : ""}`}
-    >
-      <Link className="logo" to="/">
-        Cultgig
-      </Link>
-      <nav aria-label="Primary navigation">
-        {primaryNavigation.map((x) => (
-          <Link
-            key={x.path}
-            to={x.path}
-            aria-current={location.pathname === x.path ? "page" : undefined}
+    <header className={`site-header ${isHero ? "header-hero" : ""}`}>
+      <div className="header-inner">
+        <Link className="logo" to="/" aria-label="Cultgig Home">
+          <span className="logo-text">Cultgig</span>
+          <span className="logo-badge">Marketplace</span>
+        </Link>
+
+        <nav aria-label="Primary navigation" className="header-nav">
+          {primaryNavigation.map((item) => {
+            const isActive =
+              currentPath === item.path ||
+              (item.path.startsWith("/#") && currentPath === "/");
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`nav-link ${isActive ? "active" : ""}`}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {item.label}
+                <i />
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="header-actions">
+          <Button
+            variant="outline"
+            className="post-req-header-btn"
+            onClick={openPostRequirement}
           >
-            {x.label}
-            <i />
-          </Link>
-        ))}
-      </nav>
-      <Button onClick={openOnboarding}>Get Started</Button>
-      <IconButton
-        label="Open navigation menu"
-        className="menu-button"
-        onClick={() => setOpen(true)}
-      >
-        <Menu />
-      </IconButton>
+            Post Requirement
+          </Button>
+          <Button
+            variant="primary"
+            className="join-artist-header-btn"
+            onClick={() => openOnboarding("artist")}
+          >
+            Join as Artist
+          </Button>
+        </div>
+
+        <IconButton
+          label="Open navigation menu"
+          className="menu-button"
+          onClick={() => setOpen(true)}
+        >
+          <Menu size={22} />
+        </IconButton>
+      </div>
+
       <AnimatePresence>
         {open && (
           <motion.aside
@@ -59,28 +100,72 @@ export function Header({ openOnboarding }: { openOnboarding: () => void }) {
               ease: motionTokens.easeOut,
             }}
           >
-            <IconButton
-              label="Close navigation menu"
-              onClick={() => setOpen(false)}
-            >
-              <X />
-            </IconButton>
-            <Link className="logo" to="/" onClick={() => setOpen(false)}>
-              Cultgig
-            </Link>
-            {[...primaryNavigation, ...mobileExtras].map((x) => (
-              <Link key={x.path} to={x.path} onClick={() => setOpen(false)}>
-                {x.label}
+            <div className="drawer-header">
+              <Link
+                className="logo"
+                to="/"
+                onClick={() => setOpen(false)}
+                aria-label="Cultgig Home"
+              >
+                <span className="logo-text">Cultgig</span>
               </Link>
-            ))}
-            <Button
-              onClick={() => {
-                setOpen(false);
-                openOnboarding();
-              }}
-            >
-              Get Started
-            </Button>
+              <IconButton
+                label="Close navigation menu"
+                onClick={() => setOpen(false)}
+              >
+                <X size={20} />
+              </IconButton>
+            </div>
+
+            <div className="drawer-links">
+              {primaryNavigation.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="drawer-link"
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+
+              <div className="drawer-divider" />
+              <p className="drawer-section-label">MORE</p>
+
+              {mobileExtras.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="drawer-link sub-link"
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="drawer-actions">
+              <Button
+                variant="outline"
+                className="drawer-action-btn"
+                onClick={() => {
+                  setOpen(false);
+                  openPostRequirement();
+                }}
+              >
+                Post a Requirement
+              </Button>
+              <Button
+                variant="primary"
+                className="drawer-action-btn"
+                onClick={() => {
+                  setOpen(false);
+                  openOnboarding("artist");
+                }}
+              >
+                Join as an Artist
+              </Button>
+            </div>
           </motion.aside>
         )}
       </AnimatePresence>
