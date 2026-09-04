@@ -5,14 +5,9 @@ import {
   ShieldCheck,
   Sparkles,
   ArrowUpRight,
-  Search,
   CheckCircle2,
-  Phone,
   Mail,
   MapPin,
-  Calendar,
-  IndianRupee,
-  Star,
   Users,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -34,7 +29,6 @@ import {
 } from "../components/motion/MotionPrimitives";
 import { AppMockup } from "../components/ui/AppMockup";
 import { NumberedListItem } from "../components/ui/NumberedListItem";
-import { ArtistDiscovery } from "../components/marketplace/ArtistDiscovery";
 import { faqItems, detailedFaqList } from "../content/faq";
 import { homeContent } from "../content/home";
 import {
@@ -50,7 +44,6 @@ import { siteConfig } from "../config/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import { motionTokens } from "../styles/motion";
 import type { Role } from "../types/onboarding";
-import type { ArtistProfile } from "../content/artists";
 
 function Page({
   title,
@@ -140,20 +133,11 @@ function FloatingProfileChip() {
 export function HomePage({
   openOnboarding,
   openPostRequirement,
-  onRequestBook,
 }: {
   openOnboarding: (r?: Role) => void;
   openPostRequirement: () => void;
-  onRequestBook: (artist: ArtistProfile) => void;
 }) {
   usePageMeta("Where Artists & Gigs Get Discovered");
-
-  const scrollToDiscovery = () => {
-    const el = document.getElementById("discover-artists");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <main>
@@ -217,23 +201,14 @@ export function HomePage({
             <Button
               variant="glow"
               className="magnetic"
-              onClick={scrollToDiscovery}
-            >
-              <Search size={16} />
-              {homeContent.hero.findArtistCta}
-            </Button>
-            <Button
-              variant="light"
-              className="magnetic"
               onClick={openPostRequirement}
             >
               <BriefcaseBusiness size={16} />
               {homeContent.hero.postRequirementCta}
             </Button>
             <Button
-              variant="outline"
+              variant="light"
               className="magnetic"
-              style={{ color: "#fff", borderColor: "rgba(255,255,255,0.4)" }}
               onClick={() => openOnboarding("artist")}
             >
               <Music2 size={16} />
@@ -265,14 +240,10 @@ export function HomePage({
       <TwoSidedEntry
         openOnboarding={openOnboarding}
         openPostRequirement={openPostRequirement}
-        scrollToDiscovery={scrollToDiscovery}
       />
 
-      {/* 4. Artist Discovery Explorer (Path A) */}
-      <ArtistDiscovery
-        onRequestBook={onRequestBook}
-        onPostRequirement={openPostRequirement}
-      />
+      {/* 4. Creator Showcase — static inspiration, not bookable listings */}
+      <CreatorShowcase openOnboarding={openOnboarding} />
 
       {/* 5. The Problem & Cultgig Truth */}
       <Split />
@@ -301,11 +272,9 @@ export function HomePage({
 function TwoSidedEntry({
   openOnboarding,
   openPostRequirement,
-  scrollToDiscovery,
 }: {
   openOnboarding: (role?: Role) => void;
   openPostRequirement: () => void;
-  scrollToDiscovery: () => void;
 }) {
   const { clientSide, artistSide, eyebrow, heading } = homeContent.twoSidedSplit;
   return (
@@ -332,12 +301,9 @@ function TwoSidedEntry({
                   ))}
                 </ul>
                 <div className="entry-actions">
-                  <Button variant="primary" onClick={scrollToDiscovery}>
-                    <Search size={15} />
-                    {clientSide.findCta}
-                  </Button>
-                  <Button variant="outline" onClick={openPostRequirement}>
-                    {clientSide.postCta} <ArrowUpRight size={15} />
+                  <Button variant="primary" onClick={openPostRequirement}>
+                    <BriefcaseBusiness size={15} />
+                    {clientSide.postCta}
                   </Button>
                 </div>
               </article>
@@ -369,6 +335,72 @@ function TwoSidedEntry({
             </TiltCard>
           </StaggerItem>
         </StaggerReveal>
+      </div>
+    </section>
+  );
+}
+
+/* CreatorShowcase — static brand section showing example creators
+   These are representative profiles, not live bookable listings.
+   Full marketplace experience lives in the Cultgig mobile app. */
+function CreatorShowcase({ openOnboarding }: { openOnboarding: (role?: Role) => void }) {
+  return (
+    <section className="creator-showcase-section">
+      <div className="creator-showcase-container">
+        <Reveal>
+          <div className="creator-showcase-header">
+            <span className="entry-badge">CREATOR COMMUNITY</span>
+            <h2>Meet the artists shaping creative culture.</h2>
+            <p className="section-intro">
+              From live acoustic sets at rooftop cafes to full floral wedding scenography — Cultgig brings verified independent artists and serious clients together on one trusted platform.
+            </p>
+          </div>
+        </Reveal>
+
+        <StaggerReveal className="creator-showcase-grid">
+          {showcaseCreators.map((creator) => (
+            <StaggerItem key={creator.name}>
+              <TiltCard>
+                <article className="creator-showcase-card">
+                  <div className="creator-showcase-img-wrap">
+                    <img
+                      src={creator.image}
+                      alt={`${creator.name} — ${creator.role}`}
+                      loading="lazy"
+                    />
+                    <span className="creator-showcase-category-tag">{creator.category}</span>
+                  </div>
+                  <div className="creator-showcase-info">
+                    <h3>{creator.name}</h3>
+                    <p className="creator-showcase-role">{creator.role}</p>
+                    <p className="creator-showcase-city">📍 {creator.city}</p>
+                    <div className="creator-showcase-tags">
+                      {creator.tags.map((tag) => (
+                        <span key={tag} className="creator-tag-pill">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </TiltCard>
+            </StaggerItem>
+          ))}
+        </StaggerReveal>
+
+        <Reveal delay={0.14}>
+          <div className="creator-showcase-cta-block">
+            <div>
+              <p className="eyebrow purple">ARE YOU A CREATIVE PROFESSIONAL?</p>
+              <h3>Get discovered by venues, brands &amp; event organizers.</h3>
+              <p style={{ color: "var(--color-text-secondary)", maxWidth: "480px" }}>
+                Join the growing Cultgig community of verified artists. Create your profile and start receiving direct booking inquiries from clients in your city.
+              </p>
+            </div>
+            <Button variant="glow" className="magnetic" onClick={() => openOnboarding("artist")}>
+              <Music2 size={16} />
+              Join as an Artist
+            </Button>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -576,25 +608,21 @@ export function InfoPage({
                 Create Your Artist Profile <ChevronRight size={17} />
               </Button>
             )}
-            {role === "client" && (
+            {role === "client" && openPostRequirement && (
               <>
                 <Button
                   className="magnetic"
-                  onClick={() => {
-                    location.assign("/#discover-artists");
-                  }}
+                  onClick={openPostRequirement}
                 >
-                  <Search size={16} /> Find an Artist
+                  <BriefcaseBusiness size={16} /> Post a Requirement
                 </Button>
-                {openPostRequirement && (
-                  <Button
-                    variant="outline"
-                    className="magnetic"
-                    onClick={openPostRequirement}
-                  >
-                    Post a Requirement <ArrowUpRight size={16} />
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  className="magnetic"
+                  onClick={() => location.assign("/contact")}
+                >
+                  Contact Us <ArrowUpRight size={16} />
+                </Button>
               </>
             )}
           </div>

@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
 import { OnboardingModal } from "../components/onboarding/OnboardingModal";
-import { BookingModal } from "../components/marketplace/BookingModal";
 import { PostRequirementModal } from "../components/marketplace/PostRequirementModal";
 import { OnboardingProvider } from "../state/onboardingContext";
 import { pageImages } from "../content/images";
@@ -10,7 +9,6 @@ import { siteConfig } from "../config/site";
 import { homeContent } from "../content/home";
 import { aboutContent } from "../content/about";
 import type { Role } from "../types/onboarding";
-import type { ArtistProfile } from "../content/artists";
 import {
   ContactPage,
   FAQPage,
@@ -54,7 +52,6 @@ export default function App() {
   const [onboarding, setOnboarding] = useState<{ open: boolean; role?: Role }>({
     open: false,
   });
-  const [bookingArtist, setBookingArtist] = useState<ArtistProfile | null>(null);
   const [postRequirementOpen, setPostRequirementOpen] = useState(false);
 
   useEffect(() => {
@@ -77,7 +74,6 @@ export default function App() {
 
   const openOnboarding = (role?: Role) => setOnboarding({ open: true, role });
   const openPostRequirement = () => setPostRequirementOpen(true);
-  const handleRequestBook = (artist: ArtistProfile) => setBookingArtist(artist);
 
   let page: React.ReactNode;
   switch (path) {
@@ -86,7 +82,6 @@ export default function App() {
         <HomePage
           openOnboarding={openOnboarding}
           openPostRequirement={openPostRequirement}
-          onRequestBook={handleRequestBook}
         />
       );
       break;
@@ -223,14 +218,7 @@ export default function App() {
           close={() => setOnboarding({ open: false })}
         />
 
-        {/* Direct Booking Modal (Path A) */}
-        <BookingModal
-          artist={bookingArtist}
-          isOpen={!!bookingArtist}
-          onClose={() => setBookingArtist(null)}
-        />
-
-        {/* Post a Requirement Modal (Path B) */}
+        {/* Post a Requirement Modal — captures client leads for the app */}
         <PostRequirementModal
           isOpen={postRequirementOpen}
           onClose={() => setPostRequirementOpen(false)}

@@ -1,5 +1,4 @@
 export const primaryNavigation = [
-  { label: "Find Artists", path: "/#discover-artists" },
   { label: "How It Works", path: "/how-it-works" },
   { label: "For Artists", path: "/for-artists" },
   { label: "For Businesses", path: "/for-businesses" },
